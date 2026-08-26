@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>BeeX — Заявки (admin)</title>
+<style>
+  :root { --base:#0A0F1A; --accent:#14F1D9; --muted:#94A3B8; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--base); color:#fff; font-family:Inter,system-ui,sans-serif; }
+  .wrap { max-width:1000px; margin:0 auto; padding:32px 20px; }
+  h1 { font-size:24px; font-weight:800; margin:0; }
+  .text-gradient { background:linear-gradient(90deg,#14F1D9,#0EA5E9); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .gate { max-width:360px; margin:80px auto; text-align:center; }
+  input { width:100%; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05); color:#fff; margin:10px 0; }
+  button { cursor:pointer; border:none; border-radius:999px; padding:12px 22px; font-weight:600; background:linear-gradient(90deg,#14F1D9,#0EA5E9); color:#04121a; }
+  .btn-ghost { background:transparent; border:1px solid var(--accent); color:var(--accent); }
+  table { width:100%; border-collapse:collapse; margin-top:20px; font-size:14px; }
+  th,td { text-align:left; padding:12px 14px; border-bottom:1px solid rgba(255,255,255,.07); vertical-align:top; }
+  th { color:var(--accent); font-weight:600; }
+  .topbar { display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; }
+  .err { color:#f87171; margin-top:10px; }
+  .muted { color:var(--muted); }
+  .empty { color:var(--muted); padding:24px 0; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="gate" class="gate">
+    <h1><span class="text-gradient">Bee</span>X — Заявки</h1>
+    <p class="muted">Введите пароль администратора</p>
+    <input id="pass" type="password" placeholder="Пароль" autocomplete="off" />
+    <button id="loginBtn">Войти</button>
+    <div id="gateErr" class="err"></div>
+  </div>
+
+  <div id="panel" style="display:none;">
+    <div class="topbar">
+      <h1><span class="text-gradient">Bee</span>X — Заявки</h1>
+      <div>
+        <button id="refreshBtn" class="btn-ghost">Обновить</button>
+        <button id="logoutBtn" class="btn-ghost">Выйти</button>
+      </div>
+    </div>
+    <div id="status" class="muted" style="margin-top:10px;"></div>
+    <table>
+      <thead><tr><th>Дата</th><th>Имя</th><th>Телефон</th><th>Сообщение</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxngHhZcN-fncgwO9pAyXe5qWJrpPbvxQiojT4g7nSiotprNeI_UQLSZjMMfvcpZF4ZKQ/exec';
+    const SECRET = 'bash-secret-beex';
+
+  const gate = document.getElementById('gate');
+  const panel = document.getElementById('panel');
+  const passInput = document.getElementById('pass');
+  const gateErr = document.getElementById('gateErr');
+  const rowsEl = document.getElementById('rows');
+  const statusEl = document.getElementById('status');
+
+  let adminPass = '';
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[c]));
+  }
+
+  function listUrl() {
+    return APPS_SCRIPT_URL + '?mode=list&key=' + encodeURIComponent(SECRET) +
+      '&pass=' + encodeURIComponent(adminPass);
+  }
+
+  function load() {
+    statusEl.textContent = 'Загрузка...';
+    fetch(listUrl())
+      .then(r => r.json())
+      .then(d => {
+        if (!d.ok) throw new Error(d.error || 'unauthorized');
+        rowsEl.innerHTML = '';
+        if (!d.rows.length) { statusEl.textContent = 'Заявок пока нет.'; return; }
+        d.rows.slice().reverse().forEach(r => {
+          const tr = document.createElement('tr');
+          tr.innerHTML =
+            '<td>' + esc(r[0] || '') + '</td>' +
+            '<td>' + esc(r[1] || '') + '</td>' +
+            '<td>' + esc(r[2] || '') + '</td>' +
+            '<td>' + esc(r[3] || '') + '</td>';
+          rowsEl.appendChild(tr);
+        });
+        statusEl.textContent = 'Всего заявок: ' + d.rows.length;
+      })
+      .catch(err => { statusEl.textContent = ''; alert('Ошибка: ' + err.message); });
+  }
+
+  document.getElementById('loginBtn').addEventListener('click', () => {
+    gateErr.textContent = '';
+    adminPass = passInput.value.trim();
+    if (!adminPass) { gateErr.textContent = 'Введите пароль'; return; }
+    fetch(listUrl())
+      .then(r => r.json())
+      .then(d => {
+        if (!d.ok) { gateErr.textContent = 'Неверный пароль'; return; }
+        gate.style.display = 'none';
+        panel.style.display = 'block';
+        load();
+      })
+      .catch(() => { gateErr.textContent = 'Ошибка соединения'; });
+  });
+
+  passInput.addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('loginBtn').click(); });
+
+  document.getElementById('refreshBtn').addEventListener('click', load);
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    adminPass = ''; passInput.value = '';
+    panel.style.display = 'none'; gate.style.display = 'block'; gateErr.textContent = '';
+  });
+</script>
+</body>
+</html>
