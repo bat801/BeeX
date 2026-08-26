@@ -648,14 +648,43 @@
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Form submit -> toast
+    // Form submit -> Google Apps Script (Sheet + Email + Telegram)
     const form = document.getElementById('contactForm');
     const toast = document.getElementById('toast');
-    form.addEventListener('submit', (e) => {
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwQT05dWevilV7WnQu_jo4U7cUXzr_BYiau-jQ2KEX2S3FUL6FuEPmxw8h2b40xAsGjsQ/exec';
+    const SECRET_KEY = 'bash-secret-beex';
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      toast.classList.add('show');
-      form.reset();
-      setTimeout(() => toast.classList.remove('show'), 4000);
+      const btn = form.querySelector('button[type="submit"]');
+      const original = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+
+      const payload = {
+        key: SECRET_KEY,
+        name: document.getElementById('name').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        message: document.getElementById('message').value.trim()
+      };
+
+      try {
+        const res = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || data.ok === false) throw new Error('server error');
+        toast.classList.add('show');
+        form.reset();
+        setTimeout(() => toast.classList.remove('show'), 4000);
+      } catch (err) {
+        alert('Failed to send the request. Please try again later or contact us by phone.');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = original;
+      }
     });
 
     // "Home" links (header is fixed, so anchor scroll can't reach the real top)
