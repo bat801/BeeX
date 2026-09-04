@@ -158,6 +158,97 @@
 
     /* Mobile menu transition */
     #mobileMenu { transition: max-height .4s ease, opacity .3s ease; overflow: hidden; }
+
+    /* Services Carousel */
+    .services-carousel { position: relative; }
+    .carousel-viewport { overflow: hidden; }
+    .carousel-track {
+      display: flex;
+      gap: 1.5rem;
+      transition: transform .5s cubic-bezier(.4,0,.2,1);
+    }
+    .carousel-track.dragging { transition: none; }
+    .carousel-slide {
+      flex-shrink: 0;
+      box-sizing: border-box;
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(20,241,217,0.3);
+      background: rgba(10,15,26,0.85);
+      backdrop-filter: blur(8px);
+      color: #14F1D9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .25s ease;
+      z-index: 10;
+    }
+    .carousel-btn:hover {
+      background: rgba(20,241,217,0.12);
+      border-color: rgba(20,241,217,0.6);
+      box-shadow: 0 0 20px rgba(20,241,217,0.25);
+    }
+    .carousel-btn.prev { left: -22px; }
+    .carousel-btn.next { right: -22px; }
+    @media (max-width: 639px) {
+      .carousel-btn.prev { left: 4px; }
+      .carousel-btn.next { right: 4px; }
+      .carousel-btn { width: 36px; height: 36px; font-size: 0.8rem; }
+    }
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 1.5rem;
+    }
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      border: none;
+      background: rgba(148,163,184,0.3);
+      cursor: pointer;
+      transition: all .3s ease;
+      padding: 0;
+    }
+    .carousel-dot.active {
+      background: #14F1D9;
+      box-shadow: 0 0 10px rgba(20,241,217,0.5);
+      width: 24px;
+    }
+    .badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-module {
+      background: rgba(168,85,247,0.15);
+      color: #c084fc;
+      border: 1px solid rgba(168,85,247,0.3);
+    }
+    .badge-option {
+      background: rgba(59,130,246,0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(59,130,246,0.3);
+    }
+    .badge-service {
+      background: rgba(16,185,129,0.15);
+      color: #34d399;
+      border: 1px solid rgba(16,185,129,0.3);
+    }
   </style>
 </head>
 
@@ -276,58 +367,190 @@
         <p class="text-muted mt-4">Готовые пакеты под любую задачу — от простой визитки до рекламной кампании.</p>
       </div>
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Card 1 -->
-        <div class="reveal glass rounded-2xl p-7">
-          <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
-            <i class="fa-solid fa-file-lines"></i>
-          </div>
-          <h3 class="text-lg font-bold">Лендинг / Сайт-визитка</h3>
-          <p class="text-muted text-sm mt-3">Одностраничный продающий сайт, который конвертирует посетителей в заявки.</p>
-          <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
-            <span class="text-xs text-muted">от</span>
-            <span class="text-xl font-extrabold text-gradient">4000 ₽</span>
+      <div class="services-carousel reveal">
+        <div class="carousel-viewport">
+          <div class="carousel-track" id="servicesTrack">
+
+            <!-- Slide 1: Сайт-визитка -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full">
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-id-card"></i>
+                </div>
+                <h3 class="text-lg font-bold">Сайт-визитка</h3>
+                <p class="text-muted text-sm mt-3">Одностраничный сайт-визитка для быстрого старта онлайн.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted">от</span>
+                  <span class="text-xl font-extrabold text-gradient">7 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 2: Лендинг -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full">
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-bullhorn"></i>
+                </div>
+                <h3 class="text-lg font-bold">Лендинг</h3>
+                <p class="text-muted text-sm mt-3">Продающий одностраничник с 5+ конверсионными блоками.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted">от</span>
+                  <span class="text-xl font-extrabold text-gradient">11 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 3: Многостраничный сайт -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full">
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <h3 class="text-lg font-bold">Многостраничный сайт</h3>
+                <p class="text-muted text-sm mt-3">Корпоративный сайт или каталог до 10 страниц с CMS.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted">от</span>
+                  <span class="text-xl font-extrabold text-gradient">22 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 4: Техподдержка -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full relative">
+                <span class="badge badge-service">Услуга</span>
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-screwdriver-wrench"></i>
+                </div>
+                <h3 class="text-lg font-bold">Техподдержка / Абонемент</h3>
+                <p class="text-muted text-sm mt-3">Обновления, правки и сопровождение сайта каждый месяц.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted">от</span>
+                  <span class="text-xl font-extrabold text-gradient">2 500 ₽/мес</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 5: Настройка рекламы -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full relative">
+                <span class="badge badge-service">Услуга</span>
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-bullseye"></i>
+                </div>
+                <h3 class="text-lg font-bold">Настройка рекламы</h3>
+                <p class="text-muted text-sm mt-3">Яндекс Директ под ключ: запуск, ведение и оптимизация.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted">от</span>
+                  <span class="text-xl font-extrabold text-gradient">3 000 ₽/мес</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 6: Интернет-магазин -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full relative">
+                <span class="badge badge-module">Модуль</span>
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+                <h3 class="text-lg font-bold">Интернет-магазин</h3>
+                <p class="text-muted text-sm mt-3">Полноценный интернет-магазин с каталогом и оплатой.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted"></span>
+                  <span class="text-xl font-extrabold text-gradient">55 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 7: Онлайн-запись -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full relative">
+                <span class="badge badge-module">Модуль</span>
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-calendar-check"></i>
+                </div>
+                <h3 class="text-lg font-bold">Онлайн-запись</h3>
+                <p class="text-muted text-sm mt-3">Модуль онлайн-записи для салонов, клиник и сервисов.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted"></span>
+                  <span class="text-xl font-extrabold text-gradient">15 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 8: Форма заявки -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full relative">
+                <span class="badge badge-option">Опция</span>
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-paper-plane"></i>
+                </div>
+                <h3 class="text-lg font-bold">Форма заявки</h3>
+                <p class="text-muted text-sm mt-3">Интерактивная форма с отправкой на E-mail и Telegram.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted"></span>
+                  <span class="text-xl font-extrabold text-gradient">2 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 9: Аналитика -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full relative">
+                <span class="badge badge-option">Опция</span>
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <h3 class="text-lg font-bold">Аналитика</h3>
+                <p class="text-muted text-sm mt-3">Яндекс Метрика + цели + вебвизор для отслеживания.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted"></span>
+                  <span class="text-xl font-extrabold text-gradient">3 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 10: Админ-панель -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full relative">
+                <span class="badge badge-option">Опция</span>
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-gauge-high"></i>
+                </div>
+                <h3 class="text-lg font-bold">Админ-панель</h3>
+                <p class="text-muted text-sm mt-3">Удобная панель для управления входящими заявками.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted"></span>
+                  <span class="text-xl font-extrabold text-gradient">3 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 11: Индивидуальный дизайн -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full relative">
+                <span class="badge badge-service">Услуга</span>
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-palette"></i>
+                </div>
+                <h3 class="text-lg font-bold">Индивидуальный дизайн</h3>
+                <p class="text-muted text-sm mt-3">UX/UI дизайн в Figma под ваш бренд и задачи.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted">от</span>
+                  <span class="text-xl font-extrabold text-gradient">15 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
-        <!-- Card 2 -->
-        <div class="reveal glass rounded-2xl p-7">
-          <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
-            <i class="fa-solid fa-layer-group"></i>
-          </div>
-          <h3 class="text-lg font-bold">Многостраничный сайт</h3>
-          <p class="text-muted text-sm mt-3">Корпоративный сайт или каталог с удобной структурой и CMS.</p>
-          <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
-            <span class="text-xs text-muted">от</span>
-            <span class="text-xl font-extrabold text-gradient">22 000 ₽</span>
-          </div>
-        </div>
+        <button class="carousel-btn prev" id="servicesPrev" aria-label="Назад"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="carousel-btn next" id="servicesNext" aria-label="Вперёд"><i class="fa-solid fa-chevron-right"></i></button>
 
-        <!-- Card 3 -->
-        <div class="reveal glass rounded-2xl p-7">
-          <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
-            <i class="fa-solid fa-screwdriver-wrench"></i>
-          </div>
-          <h3 class="text-lg font-bold">Техподдержка / Абонемент</h3>
-          <p class="text-muted text-sm mt-3">Обновления, правки и сопровождение сайта каждый месяц без забот.</p>
-          <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
-            <span class="text-xs text-muted">от</span>
-            <span class="text-xl font-extrabold text-gradient">1 000 ₽/мес</span>
-          </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="reveal glass rounded-2xl p-7">
-          <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
-            <i class="fa-solid fa-bullseye"></i>
-          </div>
-          <h3 class="text-lg font-bold">Настройка рекламы</h3>
-          <p class="text-muted text-sm mt-3">Яндекс Директ под ключ: запуск, ведение и оптимизация бюджета.</p>
-          <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
-            <span class="text-xs text-muted">от</span>
-            <span class="text-xl font-extrabold text-gradient">3 000 ₽/мес</span>
-          </div>
-        </div>
+        <div class="carousel-dots" id="servicesDots"></div>
       </div>
     </div>
   </section>
@@ -351,12 +574,12 @@
           <div class="p-4 text-sm text-muted">Сайт-визитка для пекарни «Вкуснейшая пекарня»</div>
         </a>
 
-        <a href="#contacts" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
-          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Сайт фитнес-студии" class="w-full h-60 object-cover" loading="lazy" />
+        <a href="https://bat801.github.io/landing-zoo/" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
+          <img src="https://i.ibb.co/pjcMSw5T/2026-09-04-10-22-39.png" alt="Сайт фитнес-студии" class="w-full h-60 object-contain" loading="lazy" />
           <div class="overlay absolute inset-0 flex flex-col items-center justify-center text-center px-4">
             <span class="btn-gradient px-5 py-2.5 rounded-full text-sm">Смотреть проект</span>
           </div>
-          <div class="p-4 text-sm text-muted">Сайт для фитнес-студии «Energy»</div>
+          <div class="p-4 text-sm text-muted">Лендинг для зоомагазина «Зоовет»</div>
         </a>
 
         <a href="https://bat801.github.io/metal_landing" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
@@ -367,28 +590,34 @@
           <div class="p-4 text-sm text-muted">Сайт для сварочной мастерской</div>
         </a>
 
-        <a href="#contacts" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
-          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80" alt="Сайт IT-стартапа" class="w-full h-60 object-cover" loading="lazy" />
+        <a href="https://bat801.github.io/landing-soyers/" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
+          <img src="https://i.ibb.co/MkXcqd5p/2026-09-04-10-20-48.png" alt="Сайт IT-стартапа" class="w-full h-60 object-contain" loading="lazy" />
           <div class="overlay absolute inset-0 flex flex-col items-center justify-center text-center px-4">
             <span class="btn-gradient px-5 py-2.5 rounded-full text-sm">Смотреть проект</span>
           </div>
-          <div class="p-4 text-sm text-muted">Сайт для IT-стартапа «Nova»</div>
+          <div class="p-4 text-sm text-muted">Лендинг для салона красоты «Soyers»</div>
         </a>
 
-        <a href="#contacts" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
-          <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80" alt="Сайт отеля" class="w-full h-60 object-cover" loading="lazy" />
+        <a href="https://ostrovok-radosti.pages.dev/" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
+          <img src="https://i.ibb.co/qYdf5d7S/2026-09-04-10-21-56.png" alt="Сайт отеля" class="w-full h-60 object-contain" loading="lazy" />
           <div class="overlay absolute inset-0 flex flex-col items-center justify-center text-center px-4">
             <span class="btn-gradient px-5 py-2.5 rounded-full text-sm">Смотреть проект</span>
           </div>
-          <div class="p-4 text-sm text-muted">Сайт для гостевого дома «Лесной»</div>
+          <div class="p-4 text-sm text-muted">Многостраничный cайт для детского клуба «Островок Радости»</div>
         </a>
 
-        <a href="#contacts" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
-          <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80" alt="Сайт магазина" class="w-full h-60 object-cover" loading="lazy" />
+        <a href="https://bat801.github.io/landing-pekara/" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
+          <img src="https://i.ibb.co/xSp3gZgn/2026-09-04-10-21-25.png" alt="Сайт магазина" class="w-full h-60 object-contain" loading="lazy" />
           <div class="overlay absolute inset-0 flex flex-col items-center justify-center text-center px-4">
             <span class="btn-gradient px-5 py-2.5 rounded-full text-sm">Смотреть проект</span>
           </div>
-          <div class="p-4 text-sm text-muted">Интернет-магазин «Style+»</div>
+          <div class="p-4 text-sm text-muted">Лендинг для пекарни «Вкуснейшая пекарня»</div>
+        </a>
+      </div>
+
+      <div class="reveal text-center mt-12">
+        <a href="https://bat801.gitverse.site/sites/" target="_blank" rel="noopener" class="btn-outline px-8 py-3.5 rounded-full text-base inline-flex items-center gap-2" style="color:#f4f6f8;">
+          <i class="fa-solid fa-layer-group" style="color:#f4f6f8;"></i> Просмотреть все работы
         </a>
       </div>
     </div>
@@ -647,6 +876,218 @@
       });
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Services Carousel
+    const servicesTrack = document.getElementById('servicesTrack');
+    const servicesSlides = Array.from(servicesTrack.querySelectorAll('.carousel-slide'));
+    const servicesPrev = document.getElementById('servicesPrev');
+    const servicesNext = document.getElementById('servicesNext');
+    const servicesDotsContainer = document.getElementById('servicesDots');
+    const carouselEl = document.querySelector('.services-carousel');
+    const CAROUSEL_GAP = 24; // 1.5rem gap, px
+    let servicesIndex = 0;
+    let servicesAutoplay;
+    let isCloning = false;
+
+    function servicesSlidesPerView() {
+      if (window.innerWidth >= 1024) return 4;
+      if (window.innerWidth >= 640) return 2;
+      return 1;
+    }
+    function servicesMaxIndex() {
+      return Math.max(0, servicesSlides.length - servicesSlidesPerView());
+    }
+    function servicesCount() { return servicesSlides.length; }
+
+    // Logical (visual) index -> pixel translate.
+    function slideWidth() {
+      const trackW = servicesTrack.offsetWidth;
+      return (trackW - CAROUSEL_GAP * (servicesSlidesPerView() - 1)) / servicesSlidesPerView();
+    }
+
+    function setSlideWidths() {
+      const w = slideWidth() + 'px';
+      servicesTrack.querySelectorAll('.carousel-slide').forEach(s => s.style.width = w);
+    }
+
+    // Build a seamless infinite loop: duplicate the slides that wrap around.
+    function buildLoop() {
+      const spv = servicesSlidesPerView();
+      // Clone "spv-1" slides to the end so the track can shift left past the last group
+      // without hitting the end (used when moving from the last group onward).
+      const extra = Math.max(spv - 1, 1);
+      for (let i = 0; i < extra; i++) {
+        const clone = servicesSlides[i].cloneNode(true);
+        servicesTrack.appendChild(clone);
+      }
+      setSlideWidths();
+    }
+    buildLoop();
+
+    function translateFor(index) {
+      return -(index * (slideWidth() + CAROUSEL_GAP));
+    }
+
+    function updateServicesDots() {
+      const totalDots = servicesMaxIndex() + 1;
+      if (servicesDotsContainer.children.length !== totalDots) {
+        servicesDotsContainer.innerHTML = '';
+        for (let i = 0; i < totalDots; i++) {
+          const dot = document.createElement('button');
+          dot.className = 'carousel-dot';
+          dot.setAttribute('aria-label', 'Слайд ' + (i + 1));
+          dot.addEventListener('click', () => {
+            servicesIndex = i;
+            // hard-jump (no transition) to avoid long slide
+            servicesTrack.classList.add('dragging');
+            servicesTrack.style.transform = 'translateX(' + translateFor(servicesIndex) + 'px)';
+            requestAnimationFrame(() => {
+              servicesTrack.classList.remove('dragging');
+            });
+            updateServicesDots();
+            resetAutoplay();
+          });
+          servicesDotsContainer.appendChild(dot);
+        }
+      }
+      Array.from(servicesDotsContainer.children).forEach((dot, i) => {
+        dot.classList.toggle('active', i === servicesIndex);
+      });
+    }
+
+    function updateServicesCarousel(animated) {
+      const transition = servicesTrack.style.transition;
+      if (animated === false) {
+        servicesTrack.style.transition = 'none';
+      }
+      servicesTrack.style.transform = 'translateX(' + translateFor(servicesIndex) + 'px)';
+      if (animated === false) {
+        servicesTrack.offsetHeight; // reflow
+        servicesTrack.style.transition = transition;
+      }
+      updateServicesDots();
+    }
+
+    function moveNext() {
+      const spv = servicesSlidesPerView();
+      const extra = servicesMaxIndex() > 0 ? Math.max(spv - 1, 1) : 0;
+      // When at last logical group, wrap using clones so it feels infinite.
+      if (servicesIndex >= servicesMaxIndex()) {
+        const current = translateFor(servicesIndex);
+        const target = translateFor(servicesIndex + spv); // shift into cloned region
+        servicesTrack.style.transition = 'transform .5s cubic-bezier(.4,0,.2,1)';
+        servicesTrack.style.transform = 'translateX(' + target + 'px)';
+        // after animation, snap back to the original position of the first group
+        const jumpTo = servicesIndex - (servicesMaxIndex());
+        const jumpTarget = translateFor(jumpTo);
+        setTimeout(() => {
+          servicesTrack.style.transition = 'none';
+          servicesTrack.style.transform = 'translateX(' + jumpTarget + 'px)';
+          servicesTrack.offsetHeight;
+          servicesTrack.style.transition = 'transform .5s cubic-bezier(.4,0,.2,1)';
+          servicesIndex = jumpTo;
+          updateServicesDots();
+          resetAutoplay();
+        }, 500);
+      } else {
+        servicesIndex++;
+        updateServicesCarousel();
+        resetAutoplay();
+      }
+    }
+
+    function movePrev() {
+      if (servicesIndex > 0) {
+        servicesIndex--;
+        updateServicesCarousel();
+        resetAutoplay();
+        return;
+      }
+      // At the very first group: jump back to cloned region at the end and scroll back.
+      // Simplest robust approach: jump instantly to the corresponding last-group clone
+      // offset by one, then animate one step back.
+      const spv = servicesSlidesPerView();
+      const lastLogical = servicesMaxIndex();
+      // Place at a clone position that visually equals the last group, one step "past" we need:
+      // logical last-group + spv (clones) 
+      const clonePos = lastLogical + spv;
+      const targetClone = translateFor(clonePos);
+      servicesTrack.style.transition = 'none';
+      servicesTrack.style.transform = 'translateX(' + targetClone + 'px)';
+      servicesTrack.offsetHeight;
+      // now animate back by one group-width
+      servicesTrack.style.transition = 'transform .5s cubic-bezier(.4,0,.2,1)';
+      servicesTrack.style.transform = 'translateX(' + translateFor(clonePos - 1) + 'px)';
+      setTimeout(() => {
+        servicesIndex = lastLogical;
+        servicesTrack.style.transition = 'none';
+        servicesTrack.style.transform = 'translateX(' + translateFor(lastLogical) + 'px)';
+        servicesTrack.offsetHeight;
+        servicesTrack.style.transition = 'transform .5s cubic-bezier(.4,0,.2,1)';
+        updateServicesDots();
+        resetAutoplay();
+      }, 500);
+    }
+
+    servicesPrev.addEventListener('click', movePrev);
+    servicesNext.addEventListener('click', moveNext);
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        setSlideWidths();
+        if (servicesIndex > servicesMaxIndex()) servicesIndex = servicesMaxIndex();
+        updateServicesCarousel(false);
+      }, 150);
+    });
+
+    // Autoplay
+    function startAutoplay() {
+      servicesAutoplay = setInterval(moveNext, 20000);
+    }
+    function resetAutoplay() {
+      clearInterval(servicesAutoplay);
+      startAutoplay();
+    }
+    startAutoplay();
+
+    // Pause on hover
+    carouselEl.addEventListener('mouseenter', () => clearInterval(servicesAutoplay));
+    carouselEl.addEventListener('mouseleave', startAutoplay);
+
+    // Touch swipe
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let isDragging = false;
+    servicesTrack.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      isDragging = true;
+      servicesTrack.classList.add('dragging');
+    }, { passive: true });
+    servicesTrack.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      touchEndX = e.touches[0].clientX;
+      const diff = touchStartX - touchEndX;
+      servicesTrack.style.transform = 'translateX(' + (translateFor(servicesIndex) - diff) + 'px)';
+    }, { passive: true });
+    servicesTrack.addEventListener('touchend', () => {
+      isDragging = false;
+      servicesTrack.classList.remove('dragging');
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          moveNext();
+        } else {
+          movePrev();
+        }
+      } else {
+        updateServicesCarousel();
+      }
+      resetAutoplay();
+    });
+
+    updateServicesCarousel(false);
 
     // Form submit -> Google Apps Script (Таблица + Email + Telegram)
     const form = document.getElementById('contactForm');

@@ -158,6 +158,97 @@
 
     /* Mobile menu transition */
     #mobileMenu { transition: max-height .4s ease, opacity .3s ease; overflow: hidden; }
+
+    /* Services Carousel */
+    .services-carousel { position: relative; }
+    .carousel-viewport { overflow: hidden; }
+    .carousel-track {
+      display: flex;
+      gap: 1.5rem;
+      transition: transform .5s cubic-bezier(.4,0,.2,1);
+    }
+    .carousel-track.dragging { transition: none; }
+    .carousel-slide {
+      flex-shrink: 0;
+      box-sizing: border-box;
+    }
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(20,241,217,0.3);
+      background: rgba(10,15,26,0.85);
+      backdrop-filter: blur(8px);
+      color: #14F1D9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .25s ease;
+      z-index: 10;
+    }
+    .carousel-btn:hover {
+      background: rgba(20,241,217,0.12);
+      border-color: rgba(20,241,217,0.6);
+      box-shadow: 0 0 20px rgba(20,241,217,0.25);
+    }
+    .carousel-btn.prev { left: -22px; }
+    .carousel-btn.next { right: -22px; }
+    @media (max-width: 639px) {
+      .carousel-btn.prev { left: 4px; }
+      .carousel-btn.next { right: 4px; }
+      .carousel-btn { width: 36px; height: 36px; font-size: 0.8rem; }
+    }
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 1.5rem;
+    }
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 9999px;
+      border: none;
+      background: rgba(148,163,184,0.3);
+      cursor: pointer;
+      transition: all .3s ease;
+      padding: 0;
+    }
+    .carousel-dot.active {
+      background: #14F1D9;
+      box-shadow: 0 0 10px rgba(20,241,217,0.5);
+      width: 24px;
+    }
+    .badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-module {
+      background: rgba(168,85,247,0.15);
+      color: #c084fc;
+      border: 1px solid rgba(168,85,247,0.3);
+    }
+    .badge-option {
+      background: rgba(59,130,246,0.15);
+      color: #60a5fa;
+      border: 1px solid rgba(59,130,246,0.3);
+    }
+    .badge-service {
+      background: rgba(16,185,129,0.15);
+      color: #34d399;
+      border: 1px solid rgba(16,185,129,0.3);
+    }
   </style>
 </head>
 
@@ -276,58 +367,190 @@
         <p class="text-muted mt-4">Ready-made packages for any task — from a simple business card to an ad campaign.</p>
       </div>
 
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Card 1 -->
-        <div class="reveal glass rounded-2xl p-7">
-          <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
-            <i class="fa-solid fa-file-lines"></i>
-          </div>
-          <h3 class="text-lg font-bold">Landing / Business card site</h3>
-          <p class="text-muted text-sm mt-3">A single-page selling website that converts visitors into leads.</p>
-          <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
-            <span class="text-xs text-muted">from</span>
-            <span class="text-xl font-extrabold text-gradient">15 000 ₽</span>
+      <div class="services-carousel reveal">
+        <div class="carousel-viewport">
+          <div class="carousel-track" id="servicesTrack">
+
+            <!-- Slide 1: Business card site -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full">
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-id-card"></i>
+                </div>
+                <h3 class="text-lg font-bold">Business card site</h3>
+                <p class="text-muted text-sm mt-3">A single-page business card site for a quick online start.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted">from</span>
+                  <span class="text-xl font-extrabold text-gradient">7 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 2: Landing page -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full">
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-bullhorn"></i>
+                </div>
+                <h3 class="text-lg font-bold">Landing page</h3>
+                <p class="text-muted text-sm mt-3">A selling one-pager with 5+ conversion blocks.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted">from</span>
+                  <span class="text-xl font-extrabold text-gradient">11 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 3: Multi-page website -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full">
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-layer-group"></i>
+                </div>
+                <h3 class="text-lg font-bold">Multi-page website</h3>
+                <p class="text-muted text-sm mt-3">Corporate site or catalog up to 10 pages with CMS.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted">from</span>
+                  <span class="text-xl font-extrabold text-gradient">22 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 4: Tech support -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full relative">
+                <span class="badge badge-service">Service</span>
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-screwdriver-wrench"></i>
+                </div>
+                <h3 class="text-lg font-bold">Tech support / Subscription</h3>
+                <p class="text-muted text-sm mt-3">Updates, edits and website maintenance every month.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted">from</span>
+                  <span class="text-xl font-extrabold text-gradient">2 500 ₽/mo</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 5: Ad setup -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full relative">
+                <span class="badge badge-service">Service</span>
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-bullseye"></i>
+                </div>
+                <h3 class="text-lg font-bold">Ad setup</h3>
+                <p class="text-muted text-sm mt-3">Yandex Direct turnkey: launch, management and optimization.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted">from</span>
+                  <span class="text-xl font-extrabold text-gradient">3 000 ₽/mo</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 6: Online store -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full relative">
+                <span class="badge badge-module">Module</span>
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+                <h3 class="text-lg font-bold">Online store</h3>
+                <p class="text-muted text-sm mt-3">A full-featured online store with catalog and payment.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted"></span>
+                  <span class="text-xl font-extrabold text-gradient">55 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 7: Online booking -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full relative">
+                <span class="badge badge-module">Module</span>
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-calendar-check"></i>
+                </div>
+                <h3 class="text-lg font-bold">Online booking</h3>
+                <p class="text-muted text-sm mt-3">Online booking module for salons, clinics and services.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted"></span>
+                  <span class="text-xl font-extrabold text-gradient">15 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 8: Lead form -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full relative">
+                <span class="badge badge-option">Option</span>
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-paper-plane"></i>
+                </div>
+                <h3 class="text-lg font-bold">Lead form</h3>
+                <p class="text-muted text-sm mt-3">Interactive form sending to E-mail and Telegram.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted"></span>
+                  <span class="text-xl font-extrabold text-gradient">2 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 9: Analytics -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full relative">
+                <span class="badge badge-option">Option</span>
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <h3 class="text-lg font-bold">Analytics</h3>
+                <p class="text-muted text-sm mt-3">Yandex Metrika + goals + webvisor for tracking.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted"></span>
+                  <span class="text-xl font-extrabold text-gradient">3 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 10: Admin panel -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full relative">
+                <span class="badge badge-option">Option</span>
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-gauge-high"></i>
+                </div>
+                <h3 class="text-lg font-bold">Admin panel</h3>
+                <p class="text-muted text-sm mt-3">Convenient panel to manage incoming requests.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted"></span>
+                  <span class="text-xl font-extrabold text-gradient">3 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Slide 11: Custom design -->
+            <div class="carousel-slide">
+              <div class="glass rounded-2xl p-7 h-full relative">
+                <span class="badge badge-service">Service</span>
+                <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
+                  <i class="fa-solid fa-palette"></i>
+                </div>
+                <h3 class="text-lg font-bold">Custom design</h3>
+                <p class="text-muted text-sm mt-3">UX/UI design in Figma for your brand and goals.</p>
+                <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
+                  <span class="text-xs text-muted">from</span>
+                  <span class="text-xl font-extrabold text-gradient">15 000 ₽</span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
-        <!-- Card 2 -->
-        <div class="reveal glass rounded-2xl p-7">
-          <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
-            <i class="fa-solid fa-layer-group"></i>
-          </div>
-          <h3 class="text-lg font-bold">Multi-page website</h3>
-          <p class="text-muted text-sm mt-3">Corporate site or catalog with a clear structure and CMS.</p>
-          <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
-            <span class="text-xs text-muted">from</span>
-            <span class="text-xl font-extrabold text-gradient">30 000 ₽</span>
-          </div>
-        </div>
+        <button class="carousel-btn prev" id="servicesPrev" aria-label="Back"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="carousel-btn next" id="servicesNext" aria-label="Forward"><i class="fa-solid fa-chevron-right"></i></button>
 
-        <!-- Card 3 -->
-        <div class="reveal glass rounded-2xl p-7">
-          <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
-            <i class="fa-solid fa-screwdriver-wrench"></i>
-          </div>
-          <h3 class="text-lg font-bold">Tech support / Subscription</h3>
-          <p class="text-muted text-sm mt-3">Updates, edits and website maintenance every month — hassle-free.</p>
-          <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
-            <span class="text-xs text-muted">from</span>
-            <span class="text-xl font-extrabold text-gradient">2 500 ₽/mo</span>
-          </div>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="reveal glass rounded-2xl p-7">
-          <div class="w-12 h-12 rounded-xl bg-accent/10 text-accent flex items-center justify-center text-xl mb-5 shadow-glow-sm">
-            <i class="fa-solid fa-bullseye"></i>
-          </div>
-          <h3 class="text-lg font-bold">Ad setup</h3>
-          <p class="text-muted text-sm mt-3">Yandex Direct turnkey: launch, management and budget optimization.</p>
-          <div class="mt-5 pt-4 border-t border-white/5 flex items-baseline justify-between">
-            <span class="text-xs text-muted">from</span>
-            <span class="text-xl font-extrabold text-gradient">5 000 ₽/mo</span>
-          </div>
-        </div>
+        <div class="carousel-dots" id="servicesDots"></div>
       </div>
     </div>
   </section>
@@ -343,52 +566,58 @@
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <!-- 6 items -->
-        <a href="#contacts" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
-          <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=800&q=80" alt="Coffee shop landing" class="w-full h-60 object-cover" loading="lazy" />
+        <a href="https://bat801.gitverse.site/sites/vizitka-pekara/" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
+          <img src="https://i.ibb.co/JR149xPG/2026-08-28-14-22-41.png" alt="Bakery business card site" class="w-full h-60 object-contain" loading="lazy" />
           <div class="overlay absolute inset-0 flex flex-col items-center justify-center text-center px-4">
             <span class="btn-gradient px-5 py-2.5 rounded-full text-sm">View project</span>
           </div>
-          <div class="p-4 text-sm text-muted">Website for "Utro" coffee shop</div>
+          <div class="p-4 text-sm text-muted">Business card site for "Vkusneyshaya Pekarnya" bakery</div>
         </a>
 
-        <a href="#contacts" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
-          <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80" alt="Fitness studio website" class="w-full h-60 object-cover" loading="lazy" />
+        <a href="https://bat801.github.io/landing-zoo/" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
+          <img src="https://i.ibb.co/pjcMSw5T/2026-09-04-10-22-39.png" alt="Pet store website" class="w-full h-60 object-contain" loading="lazy" />
           <div class="overlay absolute inset-0 flex flex-col items-center justify-center text-center px-4">
             <span class="btn-gradient px-5 py-2.5 rounded-full text-sm">View project</span>
           </div>
-          <div class="p-4 text-sm text-muted">Website for "Energy" fitness studio</div>
+          <div class="p-4 text-sm text-muted">Landing page for "Zoovet" pet store</div>
         </a>
 
-        <a href="#contacts" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
-          <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=80" alt="Agency website" class="w-full h-60 object-cover" loading="lazy" />
+        <a href="https://bat801.github.io/metal_landing" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
+          <img src="https://i.ibb.co/Pp5t2BT/2026-08-28-14-13-30.png" alt="Workshop website" class="w-full h-60 object-contain" loading="lazy" />
           <div class="overlay absolute inset-0 flex flex-col items-center justify-center text-center px-4">
             <span class="btn-gradient px-5 py-2.5 rounded-full text-sm">View project</span>
           </div>
-          <div class="p-4 text-sm text-muted">Website for a marketing agency</div>
+          <div class="p-4 text-sm text-muted">Website for a welding workshop</div>
         </a>
 
-        <a href="#contacts" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
-          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80" alt="IT startup website" class="w-full h-60 object-cover" loading="lazy" />
+        <a href="https://bat801.github.io/landing-soyers/" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
+          <img src="https://i.ibb.co/MkXcqd5p/2026-09-04-10-20-48.png" alt="Beauty salon website" class="w-full h-60 object-contain" loading="lazy" />
           <div class="overlay absolute inset-0 flex flex-col items-center justify-center text-center px-4">
             <span class="btn-gradient px-5 py-2.5 rounded-full text-sm">View project</span>
           </div>
-          <div class="p-4 text-sm text-muted">Website for "Nova" IT startup</div>
+          <div class="p-4 text-sm text-muted">Landing page for "Soyers" beauty salon</div>
         </a>
 
-        <a href="#contacts" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
-          <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80" alt="Hotel website" class="w-full h-60 object-cover" loading="lazy" />
+        <a href="https://ostrovok-radosti.pages.dev/" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
+          <img src="https://i.ibb.co/qYdf5d7S/2026-09-04-10-21-56.png" alt="Kids club website" class="w-full h-60 object-contain" loading="lazy" />
           <div class="overlay absolute inset-0 flex flex-col items-center justify-center text-center px-4">
             <span class="btn-gradient px-5 py-2.5 rounded-full text-sm">View project</span>
           </div>
-          <div class="p-4 text-sm text-muted">Website for "Lesnoy" guest house</div>
+          <div class="p-4 text-sm text-muted">Multi-page website for "Ostrovok Radosti" kids club</div>
         </a>
 
-        <a href="#contacts" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
-          <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80" alt="Store website" class="w-full h-60 object-cover" loading="lazy" />
+        <a href="https://bat801.github.io/landing-pekara/" class="reveal portfolio-item group relative rounded-2xl overflow-hidden block glass">
+          <img src="https://i.ibb.co/xSp3gZgn/2026-09-04-10-21-25.png" alt="Bakery landing page" class="w-full h-60 object-contain" loading="lazy" />
           <div class="overlay absolute inset-0 flex flex-col items-center justify-center text-center px-4">
             <span class="btn-gradient px-5 py-2.5 rounded-full text-sm">View project</span>
           </div>
-          <div class="p-4 text-sm text-muted">"Style+" online store</div>
+          <div class="p-4 text-sm text-muted">Landing page for "Vkusneyshaya Pekarnya" bakery</div>
+        </a>
+      </div>
+
+      <div class="reveal text-center mt-12">
+        <a href="https://bat801.gitverse.site/sites/" target="_blank" rel="noopener" class="btn-outline px-8 py-3.5 rounded-full text-base inline-flex items-center gap-2" style="color:#f4f6f8;">
+          <i class="fa-solid fa-layer-group" style="color:#f4f6f8;"></i> View all works
         </a>
       </div>
     </div>
@@ -647,6 +876,195 @@
       });
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Services Carousel
+    const servicesTrack = document.getElementById('servicesTrack');
+    const servicesSlides = Array.from(servicesTrack.querySelectorAll('.carousel-slide'));
+    const servicesPrev = document.getElementById('servicesPrev');
+    const servicesNext = document.getElementById('servicesNext');
+    const servicesDotsContainer = document.getElementById('servicesDots');
+    const carouselEl = document.querySelector('.services-carousel');
+    const CAROUSEL_GAP = 24;
+    let servicesIndex = 0;
+    let servicesAutoplay;
+
+    function servicesSlidesPerView() {
+      if (window.innerWidth >= 1024) return 4;
+      if (window.innerWidth >= 640) return 2;
+      return 1;
+    }
+    function servicesMaxIndex() {
+      return Math.max(0, servicesSlides.length - servicesSlidesPerView());
+    }
+    function slideWidth() {
+      const trackW = servicesTrack.offsetWidth;
+      return (trackW - CAROUSEL_GAP * (servicesSlidesPerView() - 1)) / servicesSlidesPerView();
+    }
+    function setSlideWidths() {
+      const w = slideWidth() + 'px';
+      servicesTrack.querySelectorAll('.carousel-slide').forEach(s => s.style.width = w);
+    }
+    function buildLoop() {
+      const spv = servicesSlidesPerView();
+      const extra = Math.max(spv - 1, 1);
+      for (let i = 0; i < extra; i++) {
+        const clone = servicesSlides[i].cloneNode(true);
+        servicesTrack.appendChild(clone);
+      }
+      setSlideWidths();
+    }
+    buildLoop();
+
+    function translateFor(index) {
+      return -(index * (slideWidth() + CAROUSEL_GAP));
+    }
+
+    function updateServicesDots() {
+      const totalDots = servicesMaxIndex() + 1;
+      if (servicesDotsContainer.children.length !== totalDots) {
+        servicesDotsContainer.innerHTML = '';
+        for (let i = 0; i < totalDots; i++) {
+          const dot = document.createElement('button');
+          dot.className = 'carousel-dot';
+          dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+          dot.addEventListener('click', () => {
+            servicesIndex = i;
+            servicesTrack.classList.add('dragging');
+            servicesTrack.style.transform = 'translateX(' + translateFor(servicesIndex) + 'px)';
+            requestAnimationFrame(() => {
+              servicesTrack.classList.remove('dragging');
+            });
+            updateServicesDots();
+            resetAutoplay();
+          });
+          servicesDotsContainer.appendChild(dot);
+        }
+      }
+      Array.from(servicesDotsContainer.children).forEach((dot, i) => {
+        dot.classList.toggle('active', i === servicesIndex);
+      });
+    }
+
+    function updateServicesCarousel(animated) {
+      const transition = servicesTrack.style.transition;
+      if (animated === false) {
+        servicesTrack.style.transition = 'none';
+      }
+      servicesTrack.style.transform = 'translateX(' + translateFor(servicesIndex) + 'px)';
+      if (animated === false) {
+        servicesTrack.offsetHeight;
+        servicesTrack.style.transition = transition;
+      }
+      updateServicesDots();
+    }
+
+    function moveNext() {
+      const spv = servicesSlidesPerView();
+      if (servicesIndex >= servicesMaxIndex()) {
+        const target = translateFor(servicesIndex + spv);
+        servicesTrack.style.transition = 'transform .5s cubic-bezier(.4,0,.2,1)';
+        servicesTrack.style.transform = 'translateX(' + target + 'px)';
+        const jumpTo = servicesIndex - servicesMaxIndex();
+        const jumpTarget = translateFor(jumpTo);
+        setTimeout(() => {
+          servicesTrack.style.transition = 'none';
+          servicesTrack.style.transform = 'translateX(' + jumpTarget + 'px)';
+          servicesTrack.offsetHeight;
+          servicesTrack.style.transition = 'transform .5s cubic-bezier(.4,0,.2,1)';
+          servicesIndex = jumpTo;
+          updateServicesDots();
+          resetAutoplay();
+        }, 500);
+      } else {
+        servicesIndex++;
+        updateServicesCarousel();
+        resetAutoplay();
+      }
+    }
+
+    function movePrev() {
+      if (servicesIndex > 0) {
+        servicesIndex--;
+        updateServicesCarousel();
+        resetAutoplay();
+        return;
+      }
+      const spv = servicesSlidesPerView();
+      const lastLogical = servicesMaxIndex();
+      const clonePos = lastLogical + spv;
+      const targetClone = translateFor(clonePos);
+      servicesTrack.style.transition = 'none';
+      servicesTrack.style.transform = 'translateX(' + targetClone + 'px)';
+      servicesTrack.offsetHeight;
+      servicesTrack.style.transition = 'transform .5s cubic-bezier(.4,0,.2,1)';
+      servicesTrack.style.transform = 'translateX(' + translateFor(clonePos - 1) + 'px)';
+      setTimeout(() => {
+        servicesIndex = lastLogical;
+        servicesTrack.style.transition = 'none';
+        servicesTrack.style.transform = 'translateX(' + translateFor(lastLogical) + 'px)';
+        servicesTrack.offsetHeight;
+        servicesTrack.style.transition = 'transform .5s cubic-bezier(.4,0,.2,1)';
+        updateServicesDots();
+        resetAutoplay();
+      }, 500);
+    }
+
+    servicesPrev.addEventListener('click', movePrev);
+    servicesNext.addEventListener('click', moveNext);
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        setSlideWidths();
+        if (servicesIndex > servicesMaxIndex()) servicesIndex = servicesMaxIndex();
+        updateServicesCarousel(false);
+      }, 150);
+    });
+
+    function startAutoplay() {
+      servicesAutoplay = setInterval(moveNext, 20000);
+    }
+    function resetAutoplay() {
+      clearInterval(servicesAutoplay);
+      startAutoplay();
+    }
+    startAutoplay();
+
+    carouselEl.addEventListener('mouseenter', () => clearInterval(servicesAutoplay));
+    carouselEl.addEventListener('mouseleave', startAutoplay);
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let isDragging = false;
+    servicesTrack.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      isDragging = true;
+      servicesTrack.classList.add('dragging');
+    }, { passive: true });
+    servicesTrack.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      touchEndX = e.touches[0].clientX;
+      const diff = touchStartX - touchEndX;
+      servicesTrack.style.transform = 'translateX(' + (translateFor(servicesIndex) - diff) + 'px)';
+    }, { passive: true });
+    servicesTrack.addEventListener('touchend', () => {
+      isDragging = false;
+      servicesTrack.classList.remove('dragging');
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          moveNext();
+        } else {
+          movePrev();
+        }
+      } else {
+        updateServicesCarousel();
+      }
+      resetAutoplay();
+    });
+
+    updateServicesCarousel(false);
 
     // Form submit -> Google Apps Script (Sheet + Email + Telegram)
     const form = document.getElementById('contactForm');
